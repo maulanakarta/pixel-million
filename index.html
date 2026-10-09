@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Pixel Million — Beli Tempat Pixel</title>
+  <style>
+    :root { --ink:#171717; --muted:#6b7280; --line:#e5e7eb; --soft:#f8fafc; --accent:#2563eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background:#fff; }
+    header { padding:22px 16px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(255,255,255,.96); z-index:5; }
+    .nav { max-width:1100px; margin:auto; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .brand { font-size:1.15rem; font-weight:850; letter-spacing:-.04em; }
+    .brand span { color:var(--accent); }
+    .tag { font-size:.78rem; color:#166534; background:#dcfce7; padding:6px 9px; border-radius:999px; font-weight:700; }
+    main { max-width:1100px; margin:auto; padding:28px 16px 60px; }
+    .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center; margin-bottom:26px; }
+    h1 { font-size:clamp(2rem,5vw,3.7rem); line-height:1.03; letter-spacing:-.055em; margin:0 0 14px; }
+    p { line-height:1.55; }
+    .muted { color:var(--muted); }
+    .pricebox,.panel,.stats { border:1px solid var(--line); border-radius:18px; padding:18px; background:white; }
+    .price { font-size:2rem; font-weight:850; letter-spacing:-.04em; }
+    .btn { border:0; border-radius:12px; padding:12px 16px; background:var(--accent); color:#fff; font-weight:750; font-size:.95rem; cursor:pointer; }
+    .btn.secondary { background:#f3f4f6; color:#111827; border:1px solid var(--line); }
+    .btn:disabled { opacity:.45; cursor:not-allowed; }
+    .section-title { display:flex; justify-content:space-between; align-items:end; gap:12px; flex-wrap:wrap; margin:26px 0 14px; }
+    h2 { margin:0; font-size:1.35rem; letter-spacing:-.03em; }
+    .stats { display:flex; gap:22px; flex-wrap:wrap; margin-bottom:14px; }
+    .stat strong { display:block; font-size:1.2rem; }
+    .stat small { color:var(--muted); }
+    .board-wrap { overflow:auto; border:1px solid var(--line); border-radius:16px; padding:10px; background:#fafafa; }
+    #pixelBoard { display:grid; grid-template-columns:repeat(20,minmax(14px,1fr)); gap:3px; min-width:440px; }
+    .pixel { aspect-ratio:1; border:1px solid #e5e7eb; border-radius:2px; background:#fff; padding:0; cursor:pointer; min-width:0; }
+    .pixel:hover { outline:2px solid #93c5fd; z-index:1; }
+    .pixel.selected { background:#bfdbfe; border-color:#2563eb; }
+    .pixel.sold { background:#d1d5db; cursor:not-allowed; }
+    .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:.82rem; color:var(--muted); margin:10px 0 0; }
+    .dot { display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:5px; vertical-align:-1px; border:1px solid #d1d5db; }
+    .columns { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; margin-top:16px; }
+    label { display:block; font-weight:700; font-size:.9rem; margin:12px 0 6px; }
+    input,textarea { width:100%; padding:12px; border:1px solid #d1d5db; border-radius:10px; font:inherit; background:#fff; }
+    textarea { min-height:80px; resize:vertical; }
+    .preview { width:100%; max-height:170px; object-fit:contain; background:#f9fafb; border:1px dashed #d1d5db; border-radius:12px; margin-top:10px; display:none; }
+    .summary-line { display:flex; justify-content:space-between; gap:12px; margin:9px 0; }
+    .total { font-size:1.25rem; font-weight:850; border-top:1px solid var(--line); padding-top:12px; margin-top:12px; }
+    .notice { background:#fffbeb; border:1px solid #fde68a; color:#92400e; padding:12px 14px; border-radius:12px; font-size:.88rem; line-height:1.5; }
+    footer { border-top:1px solid var(--line); padding:20px 16px; text-align:center; color:var(--muted); font-size:.85rem; }
+    .small { font-size:.82rem; }
+    @media (max-width:720px) { .hero,.columns { grid-template-columns:1fr; } header { padding:15px 13px; } main { padding:22px 13px 44px; } .hero { gap:15px; } .pricebox { padding:15px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">PIXEL <span>MILLION</span></div>
+    <div class="tag">DEMO GRATIS</div>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div>
+      <p class="muted" style="font-weight:750;text-transform:uppercase;letter-spacing:.12em;font-size:.75rem">Satu papan. Banyak cerita.</p>
+      <h1>Tempat kecil untuk ide <span style="color:var(--accent)">besar.</span></h1>
+      <p class="muted">Pilih kotak di papan pixel, siapkan gambar atau logo, lalu buat permintaan pemesanan. Papan ini adalah prototipe—pemesanan belum otomatis dibayar atau dipublikasikan.</p>
+    </div>
+    <div class="pricebox">
+      <div class="muted small">Harga contoh per paket</div>
+      <div class="price">Rp1.000</div>
+      <p class="muted small">1 paket = 1 kotak pixel pada demo ini. Kamu bisa mengubah aturan paket setelah situs siap.</p>
+      <button class="btn" onclick="document.getElementById('pilih').scrollIntoView({behavior:'smooth'})">Pilih pixel ↓</button>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><strong id="selectedCount">0</strong><small>pixel dipilih</small></div>
+    <div class="stat"><strong id="totalPrice">Rp0</strong><small>total contoh</small></div>
+    <div class="stat"><strong>400</strong><small>pixel di papan demo</small></div>
+  </div>
+
+  <section id="pilih">
+    <div class="section-title">
+      <div><h2>Pilih pixel kamu</h2><div class="muted small">Ketuk kotak kosong untuk memilih atau membatalkan.</div></div>
+      <button class="btn secondary" id="clearBtn">Hapus pilihan</button>
+    </div>
+    <div class="board-wrap"><div id="pixelBoard" aria-label="Papan pixel interaktif"></div></div>
+    <div class="legend">
+      <span><i class="dot" style="background:#fff"></i>Kosong</span>
+      <span><i class="dot" style="background:#bfdbfe;border-color:#2563eb"></i>Pilihan kamu</span>
+      <span><i class="dot" style="background:#d1d5db"></i>Contoh terisi</span>
+    </div>
+  </section>
+
+  <div class="columns">
+    <section class="panel">
+      <h2>Detail pemesanan</h2>
+      <label for="buyerName">Nama / nama brand</label>
+      <input id="buyerName" placeholder="Contoh: Toko Bintang">
+      <label for="buyerContact">Kontak yang bisa dihubungi</label>
+      <input id="buyerContact" placeholder="Email atau nomor WhatsApp">
+      <label for="websiteUrl">Link tujuan (opsional)</label>
+      <input id="websiteUrl" placeholder="https://contoh.com">
+      <label for="imageFile">Gambar / logo (opsional untuk demo)</label>
+      <input id="imageFile" type="file" accept="image/*">
+      <img id="imagePreview" class="preview" alt="Pratinjau gambar yang dipilih">
+      <label for="notes">Catatan</label>
+      <textarea id="notes" placeholder="Tulis teks atau keterangan yang ingin ditampilkan"></textarea>
+      <p class="muted small">File yang dipilih hanya dipratinjau di perangkat ini. File belum diunggah ke server.</p>
+    </section>
+    <aside class="panel">
+      <h2>Ringkasan</h2>
+      <div class="summary-line"><span class="muted">Pixel dipilih</span><strong id="summaryCount">0</strong></div>
+      <div class="summary-line"><span class="muted">Harga per pixel</span><strong>Rp1.000</strong></div>
+      <div class="summary-line total"><span>Total contoh</span><strong id="summaryTotal">Rp0</strong></div>
+      <div class="notice" style="margin:14px 0">Ini belum menerima pembayaran. Tombol di bawah hanya membuat ringkasan pesanan untuk disalin; tidak ada uang yang ditagih.</div>
+      <button class="btn" id="orderBtn" style="width:100%">Buat ringkasan pesanan</button>
+      <button class="btn secondary" id="copyBtn" style="width:100%;margin-top:8px" disabled>Salin ringkasan</button>
+      <textarea id="orderOutput" readonly placeholder="Ringkasan pesanan akan muncul di sini..." style="margin-top:12px;min-height:150px"></textarea>
+      <p class="muted small">Setelah sistem pembayaran dan penyimpanan terpasang, pesanan bisa diproses sungguhan.</p>
+    </aside>
+  </div>
+
+  <section style="margin-top:22px" class="notice">
+    <strong>Yang berfungsi sekarang:</strong> memilih pixel, menghitung harga contoh, mengisi detail, memilih gambar untuk pratinjau, dan membuat ringkasan pesanan.<br>
+    <strong>Belum berfungsi:</strong> unggah gambar ke internet, akun pembeli, pembayaran otomatis, menyimpan pesanan, serta menerbitkan iklan ke papan untuk semua pengunjung. Jangan mengirim pembayaran ke siapa pun berdasarkan demo ini.
+  </section>
+</main>
+<footer>© <span id="year"></span> Pixel Million · Prototipe website jualan pixel</footer>
+<script>
+  const PRICE = 1000;
+  const TOTAL = 400;
+  const selected = new Set();
+  const board = document.getElementById('pixelBoard');
+  const fmt = n => 'Rp' + n.toLocaleString('id-ID');
+  // Beberapa kotak abu-abu hanyalah contoh visual, bukan penjualan sungguhan.
+  const sampleFilled = new Set([12,13,14,32,33,34,35,76,77,78,151,152,153,230,250,251,252,310,311,312,313,370]);
+  for (let i=0;i<TOTAL;i++) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pixel' + (sampleFilled.has(i) ? ' sold' : '');
+    b.setAttribute('aria-label', sampleFilled.has(i) ? `Pixel ${i+1}, contoh terisi` : `Pilih pixel ${i+1}`);
+    b.title = sampleFilled.has(i) ? 'Contoh terisi (demo)' : `Pixel #${i+1}`;
+    if (sampleFilled.has(i)) b.disabled = true;
+    b.addEventListener('click', () => {
+      if (selected.has(i)) selected.delete(i); else selected.add(i);
+      b.classList.toggle('selected', selected.has(i));
+      update();
+    });
+    board.appendChild(b);
+  }
+  function update() {
+    const n = selected.size, total = n * PRICE;
+    document.getElementById('selectedCount').textContent = n;
+    document.getElementById('summaryCount').textContent = n;
+    document.getElementById('totalPrice').textContent = fmt(total);
+    document.getElementById('summaryTotal').textContent = fmt(total);
+  }
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    selected.clear();
+    document.querySelectorAll('.pixel.selected').forEach(b => b.classList.remove('selected'));
+    update();
+  });
+  document.getElementById('imageFile').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    if (!file) { preview.style.display='none'; preview.removeAttribute('src'); return; }
+    if (!file.type.startsWith('image/')) { alert('Pilih file gambar.'); e.target.value=''; return; }
+    if (file.size > 5*1024*1024) { alert('Pilih gambar maksimal 5 MB.'); e.target.value=''; return; }
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  });
+  document.getElementById('orderBtn').addEventListener('click', () => {
+    const name = document.getElementById('buyerName').value.trim();
+    const contact = document.getElementById('buyerContact').value.trim();
+    if (!selected.size) { alert('Pilih minimal satu pixel dulu.'); return; }
+    if (!name || !contact) { alert('Isi nama brand dan kontak dulu.'); return; }
+    const ids = [...selected].sort((a,b)=>a-b).map(i=>i+1);
+    const text = [
+      'PERMINTAAN PESANAN — PIXEL MILLION (DEMO)',
+      'Nama/brand: ' + name,
+      'Kontak: ' + contact,
+      'Pixel dipilih: ' + ids.length,
+      'Nomor pixel: ' + ids.join(', '),
+      'Harga contoh: ' + fmt(PRICE) + ' per pixel',
+      'Total contoh: ' + fmt(ids.length*PRICE),
+      'Link tujuan: ' + (document.getElementById('websiteUrl').value.trim() || '-'),
+      'Catatan: ' + (document.getElementById('notes').value.trim() || '-'),
+      'Gambar dipilih di perangkat: ' + (document.getElementById('imageFile').files[0]?.name || 'belum ada'),
+      '',
+      'Catatan: belum dibayar; ini bukan konfirmasi pembelian.'
+    ].join('\\n');
+    document.getElementById('orderOutput').value = text;
+    document.getElementById('copyBtn').disabled = false;
+  });
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const text = document.getElementById('orderOutput').value;
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('Ringkasan disalin.');
+    } catch {
+      document.getElementById('orderOutput').focus();
+      document.getElementById('orderOutput').select();
+      alert('Pilih teksnya lalu tekan Salin.');
+    }
+  });
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
